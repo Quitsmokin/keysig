@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p></p>
+    <form action="">
+        <fieldset>
+            <input type="radio" name="c" id="c"><label for="c">C</label>
+            <input type="radio" name="c#" id="c#"><label for="c#">C#</label>
+            <input type="radio" name="d" id="d"><label for="d">D</label>
+            <input type="radio" name="d#" id="d#"><label for="d#">D#</label>
+            <input type="radio" name="e" id="e"><label for="E">E</label>
+            <input type="radio" name="f" id="f"><label for="F">F</label>
+            <input type="radio" name="f#" id="f#"><label for="f#">F#</label>
+            <input type="radio" name="g" id="g"><label for="g">G</label>
+            <input type="radio" name="g#" id="g#"><label for="g#">G#</label>
+            <input type="radio" name="a" id="a"><label for="a">A</label>
+            <input type="radio" name="a#" id="a#"><label for="a#">A#</label> 
+            <input type="radio" name="b" id="b"><label for="b">B</label>
+        </fieldset>
+        <fieldset>
+            <input type="radio" name="maj" id="maj"><label for="maj">Major</label>
+            <input type="radio" name="min" id="min"><label for="min">Minor</label>
+        </fieldset>
+        <button type="submit" id="btn">Submit</button>
+    </form>
+    <p></p>
+    <script>
+        function wholestep (num) {
+            if(num ==10){ return 0; }
+            if(num ==11){ return 1; }
+            if(num ==12){ return 2; }
+            return num = num+2; 
+        }
+        function hfstep (num) {
+            if(num==11){return 0;}
+            if(num==12){return 1;}
+            return num = num+1; 
+        }
+        const majscale = ["c","c#","d","d#","e","f","f#","g","g#","a","a#","b"];
+        const minscale = ["c","db","d","eb","e","f","gb","g","ab","a","bb","b"];
+       /*  A: A, B, C, D, E, F, G, A
+A#/Bb: A#, B#, C#, D#, E# (F), F#, G#, A# / Bb, C, Db, Eb, F, Gb, Ab, Bb
+B: B, C#, D, E, F#, G, A, B
+C: C, D, Eb, F, G, Ab, Bb, C
+C#/Db: C#, D#, E, F#, G#, A, B, C# / Db, Eb, Fb (E), Gb, Ab, Bbb (A), Cb (B), Db
+D: D, E, F, G, A, Bb, C, D
+D#/Eb: D#, E# (F), F#, G#, A#, B, C#, D# / Eb, F, Gb, Ab, Bb, Cb (B), Db, Eb
+E: E, F#, G, A, B, C, D, E
+F: F, G, Ab, Bb, C, Db, Eb, F
+F#/Gb: F#, G#, A, B, C#, D, E, F# / Gb, Ab, Bbb (A), Cb (B), Db, Ebb (D), Fb (E), Gb
+G: G, A, Bb, C, D, Eb, F, G
+G#/Ab: G#, A#, B, C#, D#, E, F#, G# / Ab, Bb, Cb (B), Db, Eb, Fb (E), Gb, Ab
+        */
+        let sel = "d"; 
+        const scale = []; 
+
+
+
+        //minor
+        let root = minscale.indexOf(sel);
+        scale.push(minscale[root]);
+        
+        for(let i = 0; i<=1; i++) {
+            
+            root = wholestep(root) ; 
+            scale.push(minscale[root]);
+            root = hfstep(root) ; 
+            scale.push(minscale[root]);
+            root = wholestep(root) ; 
+            scale.push(minscale[root]);
+            if(i === 1 ) {root = wholestep(root); scale.push(minscale[root]);}
+        }
+
+
+        //major 
+        /*
+        let root = majscale.indexOf(sel);
+        scale.push(majscale[root]);
+        
+        for(let i = 0; i<=1; i++) {
+            if(i === 1 ) {root = wholestep(root); scale.push(majscale[root]);}
+            root = wholestep(root) ; 
+            scale.push(majscale[root]);
+            root = wholestep(root) ; 
+            scale.push(majscale[root]);
+            root = hfstep(root) ; 
+            scale.push(majscale[root]);
+        }*/
+        
+        const btn = document.querySelector('#btn');
+        const para = document.querySelector('p'); 
+        para.textContent = scale; 
+        btn.addEventListener('click', () => { 
+            
+       
+        });
+        
+        
+        
+        
+        
+    </script>
+</body>
+</html>
