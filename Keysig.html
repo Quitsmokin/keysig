@@ -7,61 +7,68 @@
     <title>Document</title>
 </head>
 <body>
-    <p></p>
+    
     <form action="">
         <fieldset>
-            <input type="radio" name="c" id="c"><label for="c">C</label>
-            <input type="radio" name="c#" id="c#"><label for="c#">C#</label>
-            <input type="radio" name="d" id="d"><label for="d">D</label>
-            <input type="radio" name="d#" id="d#"><label for="d#">D#</label>
-            <input type="radio" name="e" id="e"><label for="E">E</label>
-            <input type="radio" name="f" id="f"><label for="F">F</label>
-            <input type="radio" name="f#" id="f#"><label for="f#">F#</label>
-            <input type="radio" name="g" id="g"><label for="g">G</label>
-            <input type="radio" name="g#" id="g#"><label for="g#">G#</label>
-            <input type="radio" name="a" id="a"><label for="a">A</label>
-            <input type="radio" name="a#" id="a#"><label for="a#">A#</label> 
-            <input type="radio" name="b" id="b"><label for="b">B</label>
+            <input type="radio" name="root" value="c" id="c"><label for="c">C</label>
+            <input type="radio" name="root" value="c#" id="c#"><label for="c#">C#</label>
+            <input type="radio" name="root" value="d" id="d"><label for="d">D</label>
+            <input type="radio" name="root" value="d#" id="d#"><label for="d#">D#</label>
+            <input type="radio" name="root" value="e" id="e"><label for="E">E</label>
+            <input type="radio" name="root" value="f" id="f"><label for="F">F</label>
+            <input type="radio" name="root" value="f#" id="f#"><label for="f#">F#</label>
+            <input type="radio" name="root" value="g" id="g"><label for="g">G</label>
+            <input type="radio" name="root" value="g#" id="g#"><label for="g#">G#</label>
+            <input type="radio" name="root" value="a" id="a"><label for="a">A</label>
+            <input type="radio" name="root" value="a#" id="a#"><label for="a#">A#</label> 
+            <input type="radio" name="root" value="b" id="b"><label for="b">B</label>
         </fieldset>
         <fieldset>
-            <input type="radio" name="maj" id="maj"><label for="maj">Major</label>
-            <input type="radio" name="min" id="min"><label for="min">Minor</label>
+            <input type="radio" name="key" value="maj" id="maj" required><label for="maj">Major</label>
+            <input type="radio" name="key" value="min" id="min"><label for="min">Minor</label>
         </fieldset>
-        <button type="submit" id="btn">Submit</button>
+        
     </form>
+    <button class="submit" onclick="onClickHandler()">Submit</button>
     <p></p>
     <script>
-        function wholestep (num) {
+        var para = document.querySelector('p'); 
+    function onClickHandler(){
+//checks radio button name for type, then passes key and note along to methods 
+        const note =  document.querySelector('input[name="root"]:checked').value;
+        const key = document.querySelector('input[name="key"]:checked').value;
+        
+        console.log(note);
+        console.log(key);
+        
+        //creates array of values 
+        if(key === 'maj'){majorcreate(note);}
+        else if (key === 'min'){minorcreate(note);}
+         
+    }
+    
+       
+    //defines the stepthrough notes    
+    function wholestep (num) {
             if(num ==10){ return 0; }
             if(num ==11){ return 1; }
             if(num ==12){ return 2; }
             return num = num+2; 
-        }
-        function hfstep (num) {
+    }
+    function hfstep (num) {
             if(num==11){return 0;}
             if(num==12){return 1;}
             return num = num+1; 
-        }
+    }
+
+
         const majscale = ["c","c#","d","d#","e","f","f#","g","g#","a","a#","b"];
-        const minscale = ["c","db","d","eb","e","f","gb","g","ab","a","bb","b"];
-       /*  A: A, B, C, D, E, F, G, A
-A#/Bb: A#, B#, C#, D#, E# (F), F#, G#, A# / Bb, C, Db, Eb, F, Gb, Ab, Bb
-B: B, C#, D, E, F#, G, A, B
-C: C, D, Eb, F, G, Ab, Bb, C
-C#/Db: C#, D#, E, F#, G#, A, B, C# / Db, Eb, Fb (E), Gb, Ab, Bbb (A), Cb (B), Db
-D: D, E, F, G, A, Bb, C, D
-D#/Eb: D#, E# (F), F#, G#, A#, B, C#, D# / Eb, F, Gb, Ab, Bb, Cb (B), Db, Eb
-E: E, F#, G, A, B, C, D, E
-F: F, G, Ab, Bb, C, Db, Eb, F
-F#/Gb: F#, G#, A, B, C#, D, E, F# / Gb, Ab, Bbb (A), Cb (B), Db, Ebb (D), Fb (E), Gb
-G: G, A, Bb, C, D, Eb, F, G
-G#/Ab: G#, A#, B, C#, D#, E, F#, G# / Ab, Bb, Cb (B), Db, Eb, Fb (E), Gb, Ab
-        */
-        let sel = "d"; 
+        const minscale = ["c","db","d","eb","e","f","gb","g","ab","a","bb","b"]
+        //creates scale array we will populate 
         const scale = []; 
 
-
-
+    //uses stepwise functions to create a minor scale within array
+    function minorcreate(sel){
         //minor
         let root = minscale.indexOf(sel);
         scale.push(minscale[root]);
@@ -76,10 +83,12 @@ G#/Ab: G#, A#, B, C#, D#, E, F#, G# / Ab, Bb, Cb (B), Db, Eb, Fb (E), Gb, Ab
             scale.push(minscale[root]);
             if(i === 1 ) {root = wholestep(root); scale.push(minscale[root]);}
         }
-
-
-        //major 
-        /*
+        console.log(scale);
+        para.textContent = scale; 
+    }
+    
+    //uses stepwise functions to create a major scale within array
+    function majorcreate(sel){
         let root = majscale.indexOf(sel);
         scale.push(majscale[root]);
         
@@ -91,20 +100,10 @@ G#/Ab: G#, A#, B, C#, D#, E, F#, G# / Ab, Bb, Cb (B), Db, Eb, Fb (E), Gb, Ab
             scale.push(majscale[root]);
             root = hfstep(root) ; 
             scale.push(majscale[root]);
-        }*/
-        
-        const btn = document.querySelector('#btn');
-        const para = document.querySelector('p'); 
+        }
+        console.log(scale);
         para.textContent = scale; 
-        btn.addEventListener('click', () => { 
-            
-       
-        });
-        
-        
-        
-        
-        
+    }    
     </script>
 </body>
 </html>
